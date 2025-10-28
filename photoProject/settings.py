@@ -80,13 +80,26 @@ WSGI_APPLICATION = 'photoProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# PythonAnywhereにおいて以下のエラーが出る場合
+# TypeError:argument of 'PosixPath' is not iterable
+# DATABASESの'NAME'の値をstr(BASE_DIR / 'db.sqlite3')に
+# 修正することが必要です
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'), #修正
     }
 }
 
+# Django3.2未満でプロジェクトを作成した場合は警告表示対策として以下の記述が必要
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -139,24 +152,21 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # アクセスした場合、LOGIN_URLのページにリダイレクトされる
 LOGIN_URL = 'accounts:login'
 
-# # ログイン直後のリダイレクト先
-# LOGIN_REDIRECT_URL = 'accounts:login'
-
-# # ログアウト直後のリダイレクト先
-# LOGOUT_REDIRECT_URL ='accounts:login'
-
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # メール送信のためのクラスを設定
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# ターミナルで確認する場合は以下のコメントアウトを解除してください
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-#メールサーバーへの接続設定
-DEFAULT_FROM_EMAIL = 'toshiyakinjo@gmail.com' # メールの送信元のアドレス
-EMAIL_HOST = 'smtp.gmail.com'                 # GmailのSMPTサーバー　　　
-EMAIL_PORT = 587                              # Gmailのポート番号
-EMAIL_HOST_USER = 'toshiyakinjo@gmail.com'    # Gmailのアドレス
-EMAIL_HOST_PASSWORD = 'nwpxjehwjqdnyydk'      # Gmailのアプリ用パスワード
-EMAIL_USE_TLS = True
+# メールサーバーへの接続設定
+# Gmailのアドレス、Gmailのアプリ用パスワードは
+# お使いのものを入力してください
+DEFAULT_FROM_EMAIL = 'xxxxxx@gmail.com'  # メールの送信元のアドレスを入力
+EMAIL_HOST = 'smtp.gmail.com'            # GmailのSMPTサーバー　　　
+EMAIL_PORT = 587                         # SMPTサーバーのポート番号
+EMAIL_HOST_USER = 'xxxxxx@gmail.com'     # Gmailのアドレスを入力
+EMAIL_HOST_PASSWORD = 'xxxxxxxxxxxxxxxx' # Gmailのアプリ用パスワードを入力
+EMAIL_USE_TLS = True # SMTP サーバと通信する際に TLS (セキュア) 接続を使う
 
 # mediaフォルダーの場所(BASE_DIR以下のmedia)を登録
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

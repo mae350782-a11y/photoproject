@@ -41,8 +41,8 @@ urlpatterns = [
          name ='password_reset_complete'),
 ]
 
-# # urlpatternsにmediaフォルダーのURLパターンを追加
-# urlpatterns += static(
-#   settings.MEDIA_URL,               # MEDIA_URL = '/media/'
-#   document_root=settings.MEDIA_ROOT # MEDIA_ROOTにリダイレクト
-#   )
+# urlpatternsにmediaフォルダーのURLパターンを追加
+urlpatterns += static(
+  settings.MEDIA_URL,               # MEDIA_URL = '/media/'
+  document_root=settings.MEDIA_ROOT # MEDIA_ROOTにリダイレクト
+  )

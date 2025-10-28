@@ -1,7 +1,5 @@
 from django.urls import path
 from . import views
-from django.conf import settings           # settingsを追加
-from django.conf.urls.static import static # staticを追加
 
 # URLパターンを逆引きできるように名前を付ける
 app_name = 'photo'
@@ -26,7 +24,7 @@ urlpatterns = [
          ),
     
     # ユーザーの投稿一覧ページ
-    # photos/<Userテーブルのid値>にマッチング
+    # photos/<ユーザーテーブルのid値>にマッチング
     # <int:user>は辞書{user: id値(int)}としてCategoryViewに渡される
     path('user-list/<int:user>',
          views.UserView.as_view(),
@@ -53,9 +51,3 @@ urlpatterns = [
          name = 'photo_delete'
          ),
 ]
-
-# urlpatternsにmediaフォルダーのURLパターンを追加
-urlpatterns += static(
-  settings.MEDIA_URL,               # MEDIA_URL = '/media/'
-  document_root=settings.MEDIA_ROOT # MEDIA_ROOTにリダイレクト
-  )

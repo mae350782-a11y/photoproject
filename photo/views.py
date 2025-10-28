@@ -5,7 +5,7 @@ from django.views.generic import TemplateView, ListView
 from django.views.generic import CreateView
 # django.urlsからreverse_lazyをインポート
 from django.urls import reverse_lazy
-# formsモジュールからモデルPhotoPostをインポート
+# formsモジュールからPhotoPostFormをインポート
 from .forms import PhotoPostForm
 # method_decoratorをインポート
 from django.utils.decorators import method_decorator
@@ -71,7 +71,6 @@ class CreatePhotoView(CreateView):
         postdata.user = self.request.user
         # 投稿データをデータベースに登録
         postdata.save()
-        # self.object = user
         # 戻り値はスーパークラスのform_valid()の戻り値(HttpResponseRedirect)
         return super().form_valid(form)
 
@@ -140,7 +139,7 @@ class UserView(ListView):
         クエリによって取得されたレコード
       '''
       # self.kwargsでキーワードの辞書を取得し、
-      # userキーの値(Userテーブルのid)を取得
+      # userキーの値(ユーザーテーブルのid)を取得
       user_id = self.kwargs['user']
       # filter(フィールド名=id)で絞り込む
       user_list = PhotoPost.objects.filter(
